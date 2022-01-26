@@ -1,0 +1,10 @@
+# Default values for chuck-api.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+provider:
+  name: 'chuck-api'
+  image: 'zielony/chuck-api'
+configMap:
+  name: "jokes-conf"
+secret:
+  name: "hub-secret"

@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{.Values.configMap.name}}
+data:
+  # property-like keys; each key maps to a simple value
+  mongoUrl: {{ .Values.configMap.database.connectionString }}
+  externalSvc: {{ .Values.configMap.hub.endpoint.external }}
+  internalSvc: "ws://{{ .Values.configMap.hub.endpoint.internal }}:{{.Values.hub.port}}"

@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hub-deployment
+  labels:
+    app: hub
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hub
+  template:
+    metadata:
+      labels:
+        app: hub
+    spec:
+      containers:
+      - name: hub-image
+        image: zielony/hub
+        imagePullPolicy: Always
+        env: 
+        - name: "PORT"
+          value: "{{.Values.hub.port}}"
+        - name: "SECRET"
+          valueFrom:
+            secretKeyRef:
+              name: {{.Values.secret.name}}
+              key: hub
+        ports:
+        - containerPort: {{.Values.hub.port}}

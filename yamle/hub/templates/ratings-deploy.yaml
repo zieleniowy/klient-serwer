@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ratings-deployment
+  labels:
+    app: ratings
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ratings
+  template:
+    metadata:
+      labels:
+        app: ratings
+    spec:
+      containers:
+      - name: ratings-image
+        image: zielony/ratings
+        imagePullPolicy: Always
+        env: 
+        - name: "RANKING_LIMIT"
+          value: "{{.Values.ratings.rankingLimit}}"
+        - name: "MONGO_URL"
+          valueFrom:
+            configMapKeyRef:
+              name: {{.Values.configMap.name}}
+              key: mongoUrl
+        - name: "HUB_SECRET"
+          valueFrom:
+            secretKeyRef:
+              name: {{.Values.secret.name}}
+              key: hub

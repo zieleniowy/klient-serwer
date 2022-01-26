@@ -1,0 +1,23 @@
+mongodb:
+  podSecurityContext:
+    enabled: false
+  containerSecurityContext:
+    enabled: false
+  auth:
+    enabled: false
+hub:
+  port: 8080
+ratings: 
+  rankingLimit: 5
+configMap:
+  name: "jokes-conf"
+  database:
+    connectionString: "mongodb://hub-mongodb.labproj17.svc.cluster.local:27017/jokes"
+  hub: 
+    endpoint: 
+      external: "hub-rte-labproj17.apps.ocp.lab.cloudpak.site"
+      internal: "hub-svc.labproj17.svc.cluster.local"
+secret:
+  name: "hub-secret"
+  mongodb: "poniedzialek"
+  hub: "mamatata"

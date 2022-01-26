@@ -1,0 +1,7 @@
+# Stage 1 - the build process
+FROM node:latest as build-deps
+WORKDIR /usr/src/app
+COPY package.json ./
+RUN npm install
+COPY . ./
+CMD ["node", "index.js"]

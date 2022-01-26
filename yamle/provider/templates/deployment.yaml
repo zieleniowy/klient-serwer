@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "{{.Values.provider.name}}-deploy"
+  labels:
+    app: {{.Values.provider.name}}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{.Values.provider.name}}
+  template:
+    metadata:
+      labels:
+        app: {{.Values.provider.name}}
+    spec:
+      containers:
+      - name: "{{.Values.provider.name}}-image"
+        image: {{.Values.provider.image}}
+        imagePullPolicy: Always
+        env: 
+        - name: "ENDPOINT"
+          valueFrom:
+            configMapKeyRef:
+              name: {{.Values.configMap.name}} 
+              key: internalSvc
+        - name: "HUB_SECRET"
+          valueFrom:
+            secretKeyRef:
+              name: {{.Values.secret.name}} 
+              key: hub
